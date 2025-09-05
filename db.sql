@@ -6,16 +6,16 @@ create table film (
     fsk_freigabe integer,
     erscheinungsjahr date
 );
-create table gerne (
-    gerne_id bigint auto_increment primary key,
-    gerne varchar(255) not null
+create table genre (
+    genre_id bigint auto_increment primary key,
+    genre varchar(255) not null
 );
-create table film_gerne (
-    film_gerne_id bigint auto_increment primary key,
+create table film_genre (
+    film_genre_id bigint auto_increment primary key,
     film_id bigint not null,
-    gerne_id bigint not null,
+    genre_id bigint not null,
     foreign key (film_id) references film(film_id),
-    foreign key (gerne_id) references gerne(gerne_id)
+    foreign key (genre_id) references genre(genre_id)
 );
 create table programm (
     programm_id bigint auto_increment primary key,
@@ -24,7 +24,7 @@ create table programm (
     datum datetime not null,
     vorfuehrzeit datetime not null
     
-)
+);
 create table raum (
     raum_id bigint auto_increment primary key,
     name varchar(255) not null,
@@ -39,7 +39,7 @@ create table sitzplatz (
     preise_kategorie_id varchar(50) not null,
     buchung_id bigint,
     raum_id bigint not null,
-    foreign key (raum_id) references raum (raum_id)
+    foreign key (raum_id) references raum(raum_id)
 );
 create table kunde(
     kunde_id bigint auto_increment primary key,
@@ -47,11 +47,11 @@ create table kunde(
     email varchar(255) not null unique,
     passwort varchar(255) not null,
     geburstag date not null
-)
+);
 create table preise_kategorie(
     preise_kategorie_id varchar(50) primary key,
     preis decimal(10,2) not null
-)
+);
 create table buchung (
     buchung_id bigint auto_increment primary key,
     kunde_id bigint not null,
@@ -78,8 +78,8 @@ alter table programm
     add foreign key (raum_id) references raum(raum_id);
 
 alter table sitzplatz
-    add foreign key (buchung_id) references buchung(buchung_id);
-    add foreign key (preise_kategorie_id) references preise_kategorie (preise_kategorie_id);
+    add foreign key (buchung_id) references buchung(buchung_id),
+    add foreign key (preise_kategorie_id) references preise_kategorie(preise_kategorie_id);
 
 alter table werbung
     add foreign key (menu_id) references menu(menu_id);
