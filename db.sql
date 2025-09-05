@@ -1,10 +1,10 @@
 create table film (
     film_id bigint auto_increment primary key,
     titel varchar(255) not null,
-    dauer integer not,
+    dauer integer not null,
     inhalt mediumtext,
     fsk_freigabe integer,
-    erscheinungsjahr date,
+    erscheinungsjahr date
 );
 create table gerne (
     gerne_id bigint auto_increment primary key,
@@ -28,7 +28,7 @@ create table programm (
 create table raum (
     raum_id bigint auto_increment primary key,
     name varchar(255) not null,
-    3d tinyint default 0 not,
+    3d tinyint default 0 not null, 
     kapazitaet integer not null
 );
 
@@ -37,10 +37,9 @@ create table sitzplatz (
     reihe integer not null,
     nummer integer not null,
     preise_kategorie_id varchar(50) not null,
-    buchung_id bigint
+    buchung_id bigint,
     raum_id bigint not null,
-    foreign key (raum_id) references raum (raum_id),
-        
+    foreign key (raum_id) references raum (raum_id)
 );
 create table kunde(
     kunde_id bigint auto_increment primary key,
@@ -68,6 +67,11 @@ create table werbung (
     enddatum date not null,
     menu_id bigint not null
 );
+create table menu (
+    menu_id bigint auto_increment primary key,
+    name varchar(255) not null,
+    beschreibung mediumtext
+);
 
 alter table programm
     add foreign key (film_id) references film(film_id),
@@ -75,7 +79,7 @@ alter table programm
 
 alter table sitzplatz
     add foreign key (buchung_id) references buchung(buchung_id);
-    add foreign key (preise_kategorie) references preise_kategorie (preise_kategorie_id);
+    add foreign key (preise_kategorie_id) references preise_kategorie (preise_kategorie_id);
 
 alter table werbung
     add foreign key (menu_id) references menu(menu_id);
